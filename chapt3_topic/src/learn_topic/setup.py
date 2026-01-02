@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'pkg_python'
+package_name = 'learn_topic'
 
 setup(
     name=package_name,
@@ -24,10 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'python_node = pkg_python.python_node:main',
-            "person_node = pkg_python.person_node:main",
-            "writer_node = pkg_python.writer_node:main",
-            "learn_thread = pkg_python.learn_thread:main"
+            "novel_pub_node = learn_topic.novel_pub_node:main",
+            "novel_sub_node = learn_topic.novel_sub_node:main"
         ],
     },
 )

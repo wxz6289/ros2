@@ -1,0 +1,246 @@
+动手学ROS2-Foxy版 鱼香ROS
+
+键入以搜索
+动手学ROS2
+（一）​ROS2入门篇
+
+（二）机器人学篇
+
+（三）建模仿真篇
+
+第 8 章 机器人建模
+
+第 9 章 机器人仿真
+
+章节导读
+基础篇-概念
+入门篇-机器人仿真
+1.机器人仿真介绍
+1.为什么需要机器人仿真
+2.仿有哪些缺点
+3.常用仿真平台
+3.1 Gazebo
+3.2 WeBots
+3.3 Ignition
+3.4 Unity
+4.我们用哪个仿真平台？
+2.给两轮差速机器人添加物理参数
+3.在Gazebo加载机器人模型
+4.Gazebo仿真插件之两轮差速
+5.Gazebo仿真插件之IMU
+6.Gazebo仿真插件之激光雷达
+7.Gazebo仿真环境搭建
+进阶篇
+（四）Nav2导航篇
+
+（五）ROS2硬件控制篇
+
+（六）FishBot移动机器人开发篇
+
+（七）Moveit2机械臂篇
+
+ROS 2常用代码模板
+
+9.1 机器人仿真介绍
+大家好，我是小鱼，本节课我们主要对机器人仿真进行介绍，同时对ROS2支持的常用仿真平台进行介绍。
+
+1.为什么需要机器人仿真
+所谓机器人仿真其实就是通过软件来模仿硬件的特性，用于验证机器人算法、架构等。
+
+肯定有同学会问为什么要做机器人仿真，有这个用软件来模拟硬件的空挡，直接搞真实的机器人不行吗?
+
+答案肯定是可以的，对于个人极客来说，直接动手比仿真要来的快和直接的多。单对于公司和非常复杂的项目来说，仿真就变得很重要了。
+
+原因在于：
+
+仿真可以解决真机资源不足，真实的机器人一般价格都很贵，搭建起来也很耗费资源，小鱼是从一家创业公司一路走来的，不同部门抢机器人的现象时常发生。
+
+仿真可以保证环境的一致和稳定，举个例子，之前小鱼在部署导航系统时发现在A机器人上没问题，但在B机器人上老是丢位置，明明算法是一致的，后来发现是B机器人的IMU模块出现了松动。
+
+仿真场景可以更加灵活，在测试机器人算法时可以通过仿真软件快速更改仿真环境，验证算法（甚至还可以让机器人原地起飞）
+
+2.仿有哪些缺点
+上面说完仿真的各种好，那仿真有哪些缺陷呢？
+
+之前听一位做机械臂动力学的朋友说，他们做研发时候从来没做过仿真，原因在于仿真环境中的机器人和真实环境机器人差别过大。
+
+所以机器人仿真的主要缺陷就是仿不全，现实世界中的环境非常复杂，光线、材质、电磁干扰等等，仿真平台无法做到100%的仿真。
+
+3.常用仿真平台
+相较于ROS，ROS2支持更多更专业的仿真平台，常用的有：
+
+3.1 Gazebo
+官网链接：https://www.cyberbotics.com/
+
+Gazebo是ROS中常用的机器人仿真平台，也是OSRF（开源机器人基金会）的作品之一，关于Gazebo的介绍，小鱼已经在第六章进行介绍了，忘记的同学可以翻看下。
+
+3.2 WeBots
+官网链接：https://www.cyberbotics.com/
+
+Webots由Cyberbotics公司开发，是一个用于模拟机器人的开源和多平台桌面应用程序。它提供了一个完整的开发环境来对机器人进行建模、编程和仿真。Webots内核基于开源动力学引擎ODE和OpenGL，可以在Windows，Linux和macOS上运行，并且支持多种编程语言(C/C++，Python，Java，MATLAB)。
+
+3.3 Ignition
+官网链接：https://gazebosim.org/ 官方文档:https://ignitionrobotics.org/docs
+
+Ignition是继承于Gazebo的下一代仿真平台，Ignition Robotics基于开发库和云服务等丰富全面的工具箱，提供了一种全新的仿真方式，进一步简化仿真。高度逼真的传感器可在接近真实的环境中快速迭代更新机器人物理设计。在安全上可测试控制策略，并在持续的集成化侧重中利用仿真的诸多优势。
+
+3.4 Unity
+官网链接：hhttps://unity.com/ UnityForROS2:https://github.com/RobotecAI/ros2-for-unity
+
+Unity Robotics软件包带有许多现成的接口，能让你轻松与ROS或ROS 2的交换信息。你也能用URDF Importer直接从URDF文件中导入机器人配置，在Unity高质量的渲染管线与高精度的物理模拟加持下开始训练机器人。Unity的Asset Store还售有大量现成的环境和道具，可用于补充机器人的训练环境、完善训练任务。只需几键，你搭建的模拟就可以构建并部署到Windows 10、Mac OS或Linux等任意主流操作系统。你甚至可以使用C#、Bolt可视化编程及Asset Store上的众多脚本和实用程序来根据自己的需求进一步定制模拟环境。
+
+4.我们用哪个仿真平台？
+鉴于从ROS和Gazebo中得到的大量经验，我们依然选择Gazebo作为本次进行仿真的主要平台。但在本章节的后面，小鱼会带你一起探索下其他的仿真平台。
+
+让我们保持好奇心，下一节在上一章节机器人建模的基础上，为我们的机器人模型注入仿真需要的物理属性参数。
+
+技术交流&&问题求助：
+
+微信公众号及交流群：鱼香ROS
+小鱼微信：AiIotRobot
+QQ交流群：139707339
+174 条评论未登录用户
+说点什么
+支持 Markdown 语法预览使用 GitHub 登录
+@fishros
+fishros发表于超过 4 年前
+大家好，我是作者小鱼。大家遇到问题欢迎在评论区留言讨论。欢迎关注小鱼的微信公众号《鱼香ROS》。
+
+@lumenma
+lumenma发表于超过 4 年前
+来啦，来啦
+
+@fishros
+fishros发表于超过 4 年前
+@lumenma
+来啦，来啦
+
+来了记得start一下再走~
+
+@lh2g
+lh2g发表于超过 4 年前
+gazebo后面有吗
+
+@fishros
+fishros发表于超过 4 年前
+@lh2g
+gazebo后面有吗
+
+会的，放到了二期实战仿真了
+
+@SilentTristan
+SilentTristan发表于超过 4 年前
+鱼香肉丝 YYDS!
+感谢！
+
+@fishros
+fishros发表于超过 4 年前
+@SilentTristan
+鱼香肉丝 YYDS!
+感谢！
+
+哈哈，谢谢，加油加油一起学习机器人！:smile:
+
+@TTangZH
+TTangZH发表于超过 4 年前
+好鱼。
+
+@SilentTristan
+SilentTristan发表于超过 4 年前
+3.5节 为什么我按步骤 最后run的时候 是 Package 'village_li' not found 我试着一步步打开更下面的文件夹试还有重新创建工作空间重新试了一遍还是这样23333，求解
+
+@TTangZH
+TTangZH发表于超过 4 年前
+一次成功，不错的选择。这里讲的好友烟火气息，看着不累。
+
+加载更多
+Chat
+
+New Conversation
+
+🤓 Explain a complex thing
+
+Explain Artificial Intelligence so that I can explain it to my six-year-old child.
+
+
+🧠 Get suggestions and create new ideas
+
+Please give me the best 10 travel ideas around the world
+
+
+💭 Translate, summarize, fix grammar and more…
+
+Translate "I love you" French
+
+
+
+AITOPIA
+Hello, how can I help you today?
+
+请总结音频对话的内容
+
+
+AITOPIA
+当然可以。不过我需要知道音频对话的具体内容或主题才能帮助你进行总结。如果你能提供关于对话的主要信息或大致内容，我将很乐意为你整理和总结。
+
+For
+
+
+AITOPIA
+看起来您的消息可能没有发送完整。请提供更多信息或背景，以便我能更好地帮助您。您是想讨论某个特定的主题，还是需要总结某个对话的内容？请告诉我更多细节！
+
+请总结当前文档的主要内容
+
+
+AITOPIA
+当然可以！不过我需要您提供文档的内容或主题，以便我能够为您总结。请复制粘贴文本或提供更多信息，谢谢！
+
+https://docs.python.org/3.14/whatsnew/3.14.html
+
+
+AITOPIA
+抱歉，我无法直接访问或浏览外部链接。不过，我可以帮助总结或解释 Python 3.14 的新特性，如果您能提供该文档的主要内容或要点。这些更新可能包括新的库、功能改进、性能增强等。请告诉我您想要了解的具体部分！
+
+请总结当前正在浏览文档的核心内容
+
+
+AITOPIA
+抱歉，我无法直接访问或浏览外部链接。不过，我可以帮助总结或解释新版本的 Python 特性，基于我所知道的信息。
+如果您能够提供 Python 3.14 的一些主要功能或新特性，我可以为您展示这些内容的详细信息或做进一步的解释。
+通常情况下，每个新 Python 版本会包含以下几种变化：
+
+新功能：可能会引入新的标准库模块或现有模块的功能改进。
+
+性能改进：对于解释器自身的性能优化，或者某些库的效率提升。
+
+语法改进：可能会新增或改变某些语法特性，例如引入新的类型提示或模式匹配改进。
+
+弃用或移除的功能：某些旧功能可能会被标记为弃用，或者在将来的版本中移除。
+
+
+如果您可以提供更多信息，我将更好地为您服务！
+
+
+AITOPIA
+coin image
+10
+Upgrade
+
+
+
+
+Ask me anything...
+
+
+
+Make a Review & Earn Credit ❤
+Chat
+Ask
+Search
+Write
+Image
+ChatFile
+Vision
+Agent
+Full Page
+Invite & Earn
