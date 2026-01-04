@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'learn_topic'
+package_name = 'status_publisher'
 
 setup(
     name=package_name,
@@ -11,10 +11,10 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools', 'pyttsx3'],
+    install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='root',
-    maintainer_email='dreamerking@live.cn',
+    maintainer='ros',
+    maintainer_email='ros@todo.todo',
     description='TODO: Package description',
     license='Apache-2.0',
     extras_require={
@@ -24,8 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "novel_pub_node = learn_topic.novel_pub_node:main",
-            "novel_sub_node = learn_topic.novel_sub_node:main"
+            "sys_status_pub = status_publisher.sys_status_pub:main",
         ],
     },
 )

@@ -84,7 +84,7 @@ colcon build --packages-skip broken_pkg
 # 限制内存
 colcon build --executor sequential
 
-python -m http.Server
+python -m http.server
 apt-get update --fix-missing
 sudo apt install python3-requests
 ```
@@ -159,4 +159,12 @@ apt list --installed| grep example_interfaces
 
 ros2 interface list | grep example_interfaces
 ros2 topic hz /novel
+```
+
+```sh
+colcon build --base-paths src/chapt3_topic/src --packages-se
+lect status_interfaces --symlink-install
+source install/setup.zsh 
+ros2 interface show status_interfaces/msg/SystemStatus
+
 ```

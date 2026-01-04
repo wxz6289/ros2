@@ -7,7 +7,7 @@ using namespace std::chrono_literals;
 class TurtleControlNode: public rclcpp::Node {
   private:
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
-    rclcpp::Subscription<turtlesim::msg::Pose>::ShardPtr subscriber_;
+    rclcpp::Subscription<turtlesim::msg::Pose>::SharedPtr subscriber_;
     double target_x_{1.0};
     double target_y_{1.0};
     double k_{1.0};
@@ -18,26 +18,28 @@ class TurtleControlNode: public rclcpp::Node {
       publisher_ =
           this->create_publisher<geometry_msgs::msg::Twist>("/turtle1/cmd_vel", 10);
       subscriber_ = this->create_subscription<turtlesim::msg::Pose>(
-          "/turtle1/pose", 10, std::bind(&TurtleControlNode::on_pose_recieved, this, std::placeholders::_1));
+          "/turtle1/pose", 10, std::bind(&TurtleControlNode::on_pose_received, this, std::placeholders::_1));
     }
+
     void on_pose_received(const turtlesim::msg::Pose::SharedPtr pose) {
       auto current_x = pose->x;
       auto current_y = pose->y;
-      RCLCPP_INFO(get_logger(), "current position x = %f, x = %f", current.x,
-                  current.y);
+      RCLCPP_INFO(get_logger(), "current position: x = %f, y = %f", current_x,
+                  current_y);
       auto distance =
           std::sqrt((target_x_ - current_x) * (target_x_ - current_x) +
                     (target_y_ - current_y) * (target_y_ - current_y));
       auto angle = std::atan2((target_y_ - current_y),
-                              (target_x_ - current_x) - pose->theta);
+                              (target_x_ - current_x)) - pose->theta;
 
+      auto msg = geometry_msgs::msg::Twist();
       if(distance > 0.1) {
         if(fabs(angle) > 0.2) {
           msg.angular.z = fabs(angle);
-        }
-        esle { msg.linear.x = k * distance;
+        } else { msg.linear.x = k_ * distance;
          }
       }
+      
       if(msg.linear.x > max_speed_) {
         msg.linear.x = max_speed_;
       }

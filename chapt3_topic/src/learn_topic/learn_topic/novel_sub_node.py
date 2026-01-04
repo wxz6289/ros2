@@ -1,9 +1,11 @@
+#!/home/ros/ros_pyenv/bin/python
+
 import rclpy
 from rclpy.node import Node
 from queue import Queue
 import threading
 from example_interfaces.msg import String
-import espeaking
+import pyttsx3 as espeaking
 import time
 
 class NovelSubNode(Node):
@@ -19,14 +21,15 @@ class NovelSubNode(Node):
     self.novels_queue.put(msg.data)
 
   def speake_thread(self):
-    speaker = espeaking.Speaker()
+    speaker = espeaking.init()
     speaker.voice = 'zh'
+
     while rclpy.ok():
       if self.novels_queue.qsize() > 0 :
         text = self.novels_queue.get()
         self.get_logger().info(f"speak: {text}")
         speaker.say(text)
-        speaker.wait()
+        speaker.runAndWait()
       else:
         time.sleep(1)
 
