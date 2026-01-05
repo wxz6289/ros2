@@ -23,7 +23,7 @@ public:
                 }
             });
     }
-
+k
     void init_gui() {
         if (!label_) {
             label_ = new QLabel();
