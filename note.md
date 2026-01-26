@@ -22,8 +22,14 @@ AMENT_PREFIX_PATH 查找功能包
 输出环境变量
 printenv
 
+```sh
+ros2 run demo_nodes_py listener
+ros2 run demo_nodes_cpp talker
+```
+
 ```zsh
 ros2 run turtlesim turtlesim_node
+ros2 run turlesim turtle_teleop_key
 ```
 
 默认脚本
@@ -168,3 +174,13 @@ source install/setup.zsh
 ros2 interface show status_interfaces/msg/SystemStatus
 
 ```
+
+‵‵`sh
+rqt
+rviz2
+
+```
+
+简化机器人开发
+
+避障 

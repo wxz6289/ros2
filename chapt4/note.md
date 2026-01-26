@@ -43,3 +43,10 @@ fix [XMLPARSER Error] realpath failed No such file or directory -> Function load
 ```sh
 unset FASTRTPS_DEFAULT_PROFILES_FILE
 ```
+
+VSC 快捷键
+Alt + U 大写
+Alt + L 小写
+
+中英文切換 
+Shift + Cmd 
