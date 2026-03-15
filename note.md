@@ -184,3 +184,20 @@ rviz2
 简化机器人开发
 
 避障 
+
+launch
+
+```sh
+ros2 node list
+ros2 param dump /t2/n2 > ./src/py01_launch/config/n2.yml
+rm -rf install build log
+colcon build --packages-select cpp01_launch
+colcon build --packages-select py01_launch
+ros2 launch py01_launch py01_node_launch.py
+
+colcon list
+ros2 turtlesim turtlesim_node --ros-args --remap __ns:=/t1
+ros2 param dump node1
+ros2 param dump -h
+```
+

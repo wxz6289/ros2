@@ -1,0 +1,11 @@
+launch:
+- node:
+    name: t1
+    pkg: turtlesim
+    exec: turtlesim_node
+    output: screen
+- node:
+    name: t2
+    pkg: turtlesim
+    exec: turtlesim_node
+    output: screen
