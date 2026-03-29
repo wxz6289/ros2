@@ -199,5 +199,20 @@ colcon list
 ros2 turtlesim turtlesim_node --ros-args --remap __ns:=/t1
 ros2 param dump node1
 ros2 param dump -h
+
 ```
 
+```sh
+ros2 service list
+ros2 service type /clear
+  813* ros2 service call /clear
+  814* ros2 service call std_srvs/srv/Empty /clear
+  815* ros2 topic list
+  816* ros2 service call -h
+  817* ros2 service call /clear std_srvs/srv/Empty 
+  818* ros2 bag play subset
+  819* ros2 topic hz /turtle1/pose
+
+```
+topic: 发布订阅模型，允许节点订阅数据流并持续获取更新
+service: 请求响应模型

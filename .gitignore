@@ -3,3 +3,11 @@
 **/log
 **/log.DS_Store
 .DS_Store
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.bak
+*.tmp
