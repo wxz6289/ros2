@@ -108,3 +108,5 @@ sudo apt update
 sudo apt install "~nros-jazzy-rqt*"
 rqt
 ```
+
+dm_conctrol强化学习库依赖于mujoco库。
